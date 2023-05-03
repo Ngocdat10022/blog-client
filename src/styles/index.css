@@ -1,3 +1,12 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  /* background: #4380a7; */
+}
+
+.input:focus {
+  transition: all ease-in 0.2;
+  border: 1px solid #4380a7;
+}
