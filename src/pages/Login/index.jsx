@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import FiledInput from "../../components/FiledInput";
-
+import { useAuthContext } from "../../context/authContext";
 const Login = () => {
   const [value, setValue] = useState({ username: "", email: "", password: "" });
   const onChangeValue = (e) => {
     setValue((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  console.log("value", value);
+  const { login } = useAuthContext();
 
-  const handlelogin = (e) => {
+  const handlelogin = async (e) => {
     e.preventDefault();
-    console.log("values", value);
+    await login(value);
   };
   return (
     <>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import FiledInput from "../../components/FiledInput";
+import { register } from "../../service/api";
 
 const Register = () => {
   const [value, setValue] = useState({ username: "", email: "", password: "" });
@@ -8,11 +9,14 @@ const Register = () => {
     setValue((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const navigate = useNavigate();
+
   console.log("value", value);
 
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
-    console.log("values", value);
+    await register(value);
+    navigate("/login");
   };
   return (
     <div className="flex flex-col items-center justify-center h-[100vh] p-5 wrapper-login bg-mainColor ">
