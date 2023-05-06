@@ -7,6 +7,7 @@ export default {
       whiteColor: "#fff",
       blackColor: "#222",
       grayColor: "#edebeb",
+      textColor: "#646464",
     },
     extend: {},
   },

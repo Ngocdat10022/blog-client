@@ -5,6 +5,10 @@
 body {
   /* background: #4380a7; */
 }
+.card:hover {
+  transition: all 0.1s ease-in;
+  transform: translateY(-10px);
+}
 
 .input:focus {
   transition: all ease-in 0.2;

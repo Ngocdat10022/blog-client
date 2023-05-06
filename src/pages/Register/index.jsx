@@ -21,12 +21,14 @@ const Register = () => {
   return (
     <div className="flex flex-col items-center justify-center h-[100vh] p-5 wrapper-login bg-mainColor ">
       <div className="p-4 login-logo">
-        <img
-          src="./image/blog-logo.png"
-          height={100}
-          width={100}
-          alt="blog-logo"
-        />
+        <Link to="/">
+          <img
+            src="./image/blog-logo.png"
+            height={100}
+            width={100}
+            alt="blog-logo"
+          />
+        </Link>
       </div>
       <form className="register-form w-[400px] h-auto p-4 bg-whiteColor rounded-lg shadow-2xl">
         <h3 className="mb-5 text-[30px] font-bold text-center text-mainColor    ">
