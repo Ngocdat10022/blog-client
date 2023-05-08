@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import FiledInput from "../../components/FiledInput";
-import { register } from "../../service/api";
+import { register } from "../../service/auth";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const [value, setValue] = useState({ username: "", email: "", password: "" });
@@ -15,8 +16,11 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    await register(value);
-    navigate("/login");
+    const data = await register(value);
+    if (data) {
+      toast.success(`${data}`);
+      navigate("/login");
+    }
   };
   return (
     <div className="flex flex-col items-center justify-center h-[100vh] p-5 wrapper-login bg-mainColor ">

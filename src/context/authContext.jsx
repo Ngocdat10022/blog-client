@@ -3,7 +3,8 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { URL } from "../service/api";
+import { auth } from "../firebase/firebase";
+import { URL } from "../service/auth";
 
 const authContext = createContext();
 
@@ -11,25 +12,40 @@ const AuthContextProvider = ({ children }) => {
   const [user, setUser] = useLocalStorage("user", {});
   const [accessToken, setAccessToken] = useLocalStorage("accessToken", "");
   const [currentUser, setCurrentUser] = useState(user);
+  const [token, setToken] = useState(accessToken);
   const navigate = useNavigate();
-  const login = async (value) => {
+
+  useEffect(() => {
+    auth;
+  });
+
+  const login = async (values) => {
     try {
-      const res = await axios.post(`${URL}/login`, value);
+      const res = await axios.post(`${URL}/login`, values);
       setUser(res?.data);
       setAccessToken(res?.data?.accessToken);
       toast("Login successfully");
       navigate("/");
     } catch (err) {
       console.log("error", err);
-
       if (err?.response?.data) toast.error(`${err?.response?.data}`);
     }
+  };
+
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("user");
+    setUser(null);
+    setAccessToken(null);
   };
   useEffect(() => {
     setCurrentUser(user);
   });
+  useEffect(() => {
+    setToken(accessToken);
+  });
   return (
-    <authContext.Provider value={{ login, currentUser }}>
+    <authContext.Provider value={{ login, currentUser, logout, token }}>
       {children}
     </authContext.Provider>
   );

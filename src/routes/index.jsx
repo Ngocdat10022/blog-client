@@ -5,12 +5,17 @@ import Register from "../pages/Register";
 import Home from "../pages/Home";
 import Write from "../pages/Write";
 import Account from "../pages/Account";
+import MainLayout from "../components/MainLayout/MainLayout";
+import DetailPost from "../pages/DetailPosts";
 const Router = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/write" element={<Write />} />
-      <Route path="/account" element={<Account />} />
+      <Route path="/" element={<MainLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/write" element={<Write />} />
+        <Route path="/account" element={<Account />} />
+        <Route path="/posts/:id" element={<DetailPost />} />
+      </Route>
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />
     </Routes>
