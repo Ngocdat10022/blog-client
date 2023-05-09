@@ -22,8 +22,8 @@ const AuthContextProvider = ({ children }) => {
   const login = async (values) => {
     try {
       const res = await axios.post(`${URL}/login`, values);
-      setUser(res?.data);
       setAccessToken(res?.data?.accessToken);
+      setUser(res?.data?.findUser);
       toast("Login successfully");
       navigate("/");
     } catch (err) {
@@ -37,15 +37,18 @@ const AuthContextProvider = ({ children }) => {
     localStorage.removeItem("user");
     setUser(null);
     setAccessToken(null);
+    navigate("/");
   };
   useEffect(() => {
     setCurrentUser(user);
-  });
+  }, [user]);
   useEffect(() => {
     setToken(accessToken);
-  });
+  }, [accessToken]);
   return (
-    <authContext.Provider value={{ login, currentUser, logout, token }}>
+    <authContext.Provider
+      value={{ login, currentUser, logout, token, setAccessToken, setUser }}
+    >
       {children}
     </authContext.Provider>
   );

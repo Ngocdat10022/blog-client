@@ -36,7 +36,11 @@ export const getPostsSimilar = async (idPosts) => {
 
 export const addPosts = async (values, token) => {
   try {
-    const res = await axios.post(`${URL}/posts/addposts`, values, {});
+    const res = await axios.post(`${URL}/posts/addposts`, values, {
+      headers: {
+        Authorization: token,
+      },
+    });
     const data = res?.data;
     return data;
   } catch (error) {

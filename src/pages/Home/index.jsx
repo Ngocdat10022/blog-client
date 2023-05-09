@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import Heading from "../../components/Heading";
 import List from "../../components/List";
-import Footer from "../../components/Footer";
 import Card from "../../components/Card";
 import { getPosts } from "../../service/posts";
 

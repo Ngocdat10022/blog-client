@@ -87,7 +87,14 @@ const DetailPost = () => {
         <div className="grid grid-cols-1">
           {postsSimilar.length > 0 &&
             postsSimilar.map((post) => {
-              return <Card title={post?.title} src={post?.img} id={post?.id} />;
+              return (
+                <Card
+                  title={post?.title}
+                  src={post?.img}
+                  id={post?.id}
+                  key={post?.id}
+                />
+              );
             })}
         </div>
       </div>

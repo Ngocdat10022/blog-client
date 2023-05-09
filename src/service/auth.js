@@ -9,6 +9,10 @@ export const register = async (value) => {
     return res.data;
   } catch (error) {
     console.log("error", error);
-    if (error?.response?.data) toast.error(`${error?.response?.data}`);
+    if (error?.response?.data) {
+      toast.error(`${error?.response?.data}`);
+    } else {
+      toast.error(`${error?.message}`);
+    }
   }
 };

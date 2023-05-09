@@ -1,10 +1,10 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SearchIcon from "../../../public/Icons/SearchIcon";
-import useLocalStorage from "../../hooks/useLocalStorage";
 import logo from "../../../public/image/blog-logo.png";
-import avatar from "../../../public/image/avatar.jpg";
 import { toast } from "react-toastify";
+import Button from "../Button";
+import avatar from "../../../public/image/avatar.jpg";
 import { useAuthContext } from "../../context/authContext";
 
 const Header = () => {
@@ -77,7 +77,7 @@ const Header = () => {
             <Link to="/account">
               <img
                 className="rounded-full w-[50px] bg-cover  h-[50px]"
-                src={`${currentUser?.avatar}`}
+                src={`${currentUser?.avatar || avatar}`}
                 alt="avatar"
                 width={60}
                 height={60}
