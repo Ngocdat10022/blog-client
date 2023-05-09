@@ -31,14 +31,16 @@ const Login = () => {
             Login
           </h3>
           <FiledInput
+            className="flex-col "
             name="username"
-            lable="Username"
+            lable="Tên đăng nhập"
             type="text"
             onChange={onChangeValue}
           />
           <FiledInput
+            className="flex-col"
             name="password"
-            lable="password"
+            lable="Mật Khẩu"
             type="password"
             onChange={onChangeValue}
           />
@@ -46,10 +48,10 @@ const Login = () => {
             onClick={handlelogin}
             className="flex items-center justify-center w-full p-2 mt-3 cursor-pointer text-whiteColor bg-mainColor"
           >
-            <span>Login</span>
+            <span>Đăng Nhập</span>
           </button>
           <Link className="block m-3 text-center text-mainColor" to="/register">
-            Register here
+            Đăng Kí tại đây!
           </Link>
         </form>
       </div>

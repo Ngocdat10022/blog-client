@@ -36,23 +36,26 @@ const Register = () => {
       </div>
       <form className="register-form w-[400px] h-auto p-4 bg-whiteColor rounded-lg shadow-2xl">
         <h3 className="mb-5 text-[30px] font-bold text-center text-mainColor    ">
-          Register Account
+          Đăng Kí Tài Khoản
         </h3>
         <FiledInput
+          className="flex-col"
           name="username"
-          lable="Username"
+          lable="Tên đăng nhập"
           type="text"
           onChange={onChangeValue}
         />
         <FiledInput
+          className="flex-col"
           name="email"
           lable="Email"
           type="email"
           onChange={onChangeValue}
         />
         <FiledInput
+          className="flex-col"
           name="password"
-          lable="password"
+          lable="Mật Khẩu"
           type="password"
           onChange={onChangeValue}
         />
@@ -60,11 +63,11 @@ const Register = () => {
           onClick={handleRegister}
           className="flex items-center justify-center w-full p-2 mt-3 cursor-pointer text-whiteColor bg-mainColor"
         >
-          <span>Register</span>
+          <span>Đăng Kí</span>
         </button>
         <span>
           <Link className="block m-3 text-center text-mainColor" to="/login">
-            Login here
+            Đăng nhập tại đây!
           </Link>
         </span>
         <div className="flex items-center justify-center p-2 cursor-pointer text-whiteColor bg-mainColor">
@@ -74,7 +77,7 @@ const Register = () => {
             height={20}
             className="mr-4"
           />
-          <span>Login with google</span>
+          <span>Đăng nhập với google</span>
         </div>
       </form>
     </div>

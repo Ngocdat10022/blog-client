@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import avatar from "../../../public/image/profile-avatar.png";
+
 import {
   deletePosts,
   getDetailPosts,
@@ -10,6 +12,7 @@ import { useAuthContext } from "../../context/authContext";
 import penImg from "../../../public/image/pen.png";
 import deleteImg from "../../../public/image/delete.jpg";
 import { toast } from "react-toastify";
+import List from "../../components/List";
 const DetailPost = () => {
   const { id } = useParams();
   const [detailPosts, setDetailPosts] = useState([]);
@@ -29,7 +32,7 @@ const DetailPost = () => {
   }, [id]);
 
   const { currentUser, token } = useAuthContext();
-  // console.log("posts", detailPosts);
+  console.log("posts", detailPosts);
   // console.log("currentUser", currentUser);
 
   const handleDeletePosts = async () => {
@@ -38,15 +41,15 @@ const DetailPost = () => {
     navigate("/");
   };
   return (
-    <div className="flex items-start gap-5">
-      <div className="flex flex-col gap-5 items-start w-[70%]">
+    <div className="flex items-start gap-5 max-lg:flex-col">
+      <div className="flex flex-col max-lg:w-full gap-5 items-start w-[70%]">
         <div className="w-full">
           <img src={detailPosts?.img} className="w-full" />
         </div>
         <div className="flex items-center gap-3">
           <img
             className="w-[50px] h-[50px] rounded-full"
-            src={detailPosts?.img}
+            src={detailPosts?.avatar || avatar}
           />
           <div className="flex flex-col items-start">
             <span className="text-sm font-bold">{detailPosts?.username}</span>
@@ -73,7 +76,7 @@ const DetailPost = () => {
             )}
           </div>
         </div>
-        <div className="text-[44px] font-bold">
+        <div className="text-[44px] max-md:text-4xl font-bold">
           <h3>{detailPosts?.title}</h3>
         </div>
         <div className="text-xl text-textColor">
@@ -82,20 +85,22 @@ const DetailPost = () => {
           </p>
         </div>
       </div>
-      <div className="flex-1 ">
+      <div className="flex-1 max-lg:w-full ">
         <h3 className="text-2xl font-bold text-center">Bài viết liên quan</h3>
         <div className="grid grid-cols-1">
-          {postsSimilar.length > 0 &&
-            postsSimilar.map((post) => {
-              return (
-                <Card
-                  title={post?.title}
-                  src={post?.img}
-                  id={post?.id}
-                  key={post?.id}
-                />
-              );
-            })}
+          <List>
+            {postsSimilar.length > 0 &&
+              postsSimilar.map((post) => {
+                return (
+                  <Card
+                    title={post?.title}
+                    src={post?.img}
+                    id={post?.id}
+                    key={post?.id}
+                  />
+                );
+              })}
+          </List>
         </div>
       </div>
     </div>

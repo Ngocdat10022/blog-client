@@ -15,11 +15,11 @@ const Home = () => {
     });
   }, [search]);
   return (
-    <div className="wrapper-home ">
-      <div className="flex items-center gap-5">
+    <div className="wrapper-home">
+      <div className="flex items-center gap-5 max-md:flex-col-reverse">
         <div className="flex flex-col gap-4">
-          <h3 className="text-[60px] font-bold">
-            Create a good article on any topic
+          <h3 className="text-[60px] max-md:text-5xl font-bold">
+            Tạo một bài viết hay về bất kỳ chủ đề nào
           </h3>
           <h5 className="text-xl text-textColor">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo,

@@ -1,13 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import SearchIcon from "../../../public/Icons/SearchIcon";
+import CloseIcon from "../../../public/Icons/CloseIcon";
+import ListIcon from "../../../public/Icons/ListIcon";
 import logo from "../../../public/image/blog-logo.png";
 import { toast } from "react-toastify";
 import Button from "../Button";
-import avatar from "../../../public/image/avatar.jpg";
+import avatar from "../../../public/image/profile-avatar.png";
 import { useAuthContext } from "../../context/authContext";
 
 const Header = () => {
+  const [isShowNav, setShowNav] = useState(false);
+
+  const handleShowNav = () => {
+    setShowNav(!isShowNav);
+  };
   const navigate = useNavigate();
 
   const { token, currentUser } = useAuthContext();
@@ -15,59 +22,69 @@ const Header = () => {
     if (!token) toast.warning("Vui lòng đăng nhập");
     if (token) navigate("/write");
   };
+
+  const listNav = [
+    {
+      to: "/?cat=đầu bếp",
+      name: "Đầu Bếp",
+    },
+    {
+      to: "/?cat=công nghệ",
+      name: "Công Nghệ",
+    },
+    {
+      to: "/?cat=điện ảnh",
+      name: "Điện Ảnh",
+    },
+    {
+      to: "/?cat=khoa học",
+      name: "Khoa Học",
+    },
+    {
+      to: "/?cat=thiết kế",
+      name: "Thiết Kế",
+    },
+    {
+      to: "/?cat=đồ ăn",
+      name: "Đồ Ăn",
+    },
+  ];
   return (
-    <header className="header h-[80px] w-full bg-whiteColor flex items-center justify-between pl-5 pr-5 ">
+    <header className="header h-[80px] w-full bg-whiteColor flex items-center justify-between ">
+      <span className="cursor-pointer lg:hidden" onClick={handleShowNav}>
+        <ListIcon className="w-8" />
+      </span>
       <div className="">
         <Link to="/">
           <img src={logo} alt="logo" width={60} height={60} />
         </Link>
       </div>
-      <nav className="flex items-center gap-3">
-        <ul className="flex items-center gap-3">
-          <li>
-            <Link to="/?cat=art" className="hover:text-mainColor">
-              ART
-            </Link>
-          </li>
-          <li>
-            <Link to="/?cat=cook" className="hover:text-mainColor">
-              COOK
-            </Link>
-          </li>
-          <li>
-            <Link to="/?cat=technology" className="hover:text-mainColor">
-              TECHNOLOGY
-            </Link>
-          </li>
-          <li>
-            <Link to="/?cat=film" className="hover:text-mainColor">
-              FILM
-            </Link>
-          </li>
-          <li>
-            <Link to="/?cat=science" className="hover:text-mainColor">
-              SCIENCE
-            </Link>
-          </li>
-          <li>
-            <Link to="/?cat=design" className="hover:text-mainColor">
-              DESIGN
-            </Link>
-          </li>
-          <li>
-            <Link to="/?cat=food" className="hover:text-mainColor">
-              FOOD
-            </Link>
-          </li>
-          <li>
-            <Link to="/?cat=cienna" className="hover:text-mainColor">
-              CIENNA
-            </Link>
-          </li>
+      <nav
+        className={`flex items-center gap-3 max-lg:z-10 max-lg:bg-whiteColor max-lg:p-5 transtion transition-all duration-150 max-lg:gap-6 max-lg:fixed max-lg:left-0 max-lg:bottom-0 max-lg:shadow-xl max-lg:top-0 ${
+          isShowNav ? `max-lg:translate-x-0` : `max-lg:-translate-x-full`
+        } max-lg:flex-col`}
+      >
+        <span
+          className="absolute cursor-pointer top-2 right-2 lg:hidden"
+          onClick={handleShowNav}
+        >
+          <CloseIcon />
+        </span>
+        <ul className="flex items-center gap-3 max-lg:flex-col">
+          {listNav.length > 0 &&
+            listNav.map((item) => {
+              return (
+                <li key={item?.name}>
+                  <Link to={`${item?.to}`} className="hover:text-mainColor">
+                    {item?.name}
+                  </Link>
+                </li>
+              );
+            })}
         </ul>
         <div className="flex items-center gap-2 ml-8 border-b outline-none search border-mainColor">
           <SearchIcon className="w-6 h-6" />
-          <input className="outline-none " placeholder="Search posts" />
+          <input className="outline-none " placeholder="Tìm kiếm bài viết" />
         </div>
       </nav>
 
@@ -86,8 +103,8 @@ const Header = () => {
           </div>
         ) : (
           <div className="flex items-center gap-4">
-            <Button name="Login" to="login" />
-            <Button name="Register" to="register" />
+            <Button name="Đăng Nhập" to="login" />
+            <Button name="Đăng Kí" to="register" />
           </div>
         )}
         <div>
@@ -95,7 +112,7 @@ const Header = () => {
             onClick={handleWrite}
             className="w-[60px] h-[60px] rounded-full bg-mainColor text-whiteColor text-sm"
           >
-            Write
+            Viết Bài
           </button>
         </div>
       </div>

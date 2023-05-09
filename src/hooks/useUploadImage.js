@@ -7,9 +7,10 @@ import {
 } from "firebase/storage";
 import { useAuthContext } from "../context/authContext";
 const useUploaImage = () => {
-  const { currentUser } = useAuthContext();
+  const [progress, setProgress] = useState();
+
   const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState(currentUser?.avatar);
+  const [image, setImage] = useState("");
 
   const handleUploadImage = (file) => {
     setLoading(true);
@@ -21,6 +22,7 @@ const useUploaImage = () => {
       (snapshot) => {
         const progressBar =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        setProgress(progressBar);
         switch (snapshot.state) {
           case "paused":
             console.log("Upload is paused");
@@ -52,7 +54,7 @@ const useUploaImage = () => {
     handleUploadImage(file);
   };
 
-  return { handleChangeImage, loading, image };
+  return { handleChangeImage, loading, image, progress };
 };
 
 export default useUploaImage;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import UploadIcon from "../../../public/Icons/UploadIcon";
 import { useLocation, useNavigate } from "react-router-dom";
-
+import uploadImg from "../../../public/image/img-upload.png";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import useUploaImage from "../../hooks/useUploadImage";
@@ -15,35 +15,35 @@ const Write = () => {
 
   const [des, setDes] = useState(state?.des);
   const [title, setTitle] = useState(state?.title);
-  const [category, setCategory] = useState(state?.cat);
+  const [category, setCategory] = useState(state?.cat || "công nghệ");
   const listCategory = [
     {
-      name: "Art",
-      value: "art",
+      name: "Công Nghệ",
+      value: "công nghệ",
     },
     {
-      name: "Technology",
-      value: "technology",
+      name: "Khoa Học",
+      value: "khoa học",
     },
     {
-      name: "Science",
-      value: "science",
+      name: "Điện Ảnh",
+      value: "điện ảnh",
     },
     {
-      name: "Cinema",
-      value: "cinema",
+      name: "Thiết Kế",
+      value: "thiết kế",
     },
     {
-      name: "Design",
-      value: "design",
+      name: "Đồ Ăn",
+      value: "đồ ăn",
     },
     {
-      name: "Food",
-      value: "food",
+      name: "Đầu Bếp",
+      value: "đầu bếp",
     },
   ];
   const navigate = useNavigate();
-  const { handleChangeImage, loading, image } = useUploaImage();
+  const { handleChangeImage, loading, image, progress } = useUploaImage();
   const { token } = useAuthContext();
   const getText = (html) => {
     const doc = new DOMParser().parseFromString(html, "text/html");
@@ -73,21 +73,20 @@ const Write = () => {
   useEffect(() => {
     if (!token) navigate("/");
   });
-
   return (
     <div className="mt-10 ">
-      <h3 className="text-[32px] font-bold text-mainColor ">Add New Posts</h3>
-      <div className="flex gap-20 mt-20 add">
-        <div className="flex flex-col gap-20 content flex-5">
+      <h3 className="text-[32px]  font-bold text-mainColor ">Viết Bài</h3>
+      <div className="flex gap-20 max-md:h-[900px] mt-20 max-md:flex-col max-md:gap-5 add">
+        <div className="flex flex-col gap-20 flex-5 content">
           <input
             type="text"
             value={title}
             name="title"
-            placeholder="Title"
+            placeholder="Tiêu đề"
             className="p-10 border border-gray-300"
             onChange={(e) => setTitle(e.target.value)}
           />
-          <div className="editorContainer h-[300px] overflow-scroll border border-gray-300">
+          <div className="editorContainer h-[300px] overflow-scroll border-solid border-mainColor border-gray-300">
             <ReactQuill
               className="editor"
               theme="snow"
@@ -96,7 +95,7 @@ const Write = () => {
             />
           </div>
         </div>
-        <div className="flex flex-col gap-20 menu flex-2">
+        <div className="flex gap-20 menu flex-2">
           <label className="relative z-10 flex items-center justify-center item">
             <input
               type="file"
@@ -108,22 +107,29 @@ const Write = () => {
             {image ? (
               <img
                 alt="img-upload"
-                src={`${image}`}
+                src={`${image || state?.img}`}
                 width={100}
                 className="absolute w-full h-full bg-cover cursor-pointer"
               />
             ) : (
               <img
                 alt="img-upload"
-                src="./public/image/img-upload.png"
-                width={100}
-                className="cursor-pointer "
+                src={uploadImg}
+                className={`cursor-pointer w-[100px]`}
               />
             )}
             {image && (
               <div className="item__delete absolute flex items-center justify-center cursor-pointer bg-mainColor z-100 w-[80px] h-[80px] rounded-full">
                 <UploadIcon className="h-10 bg-mainColor w-14" />
               </div>
+            )}
+            {loading && (
+              <div
+                style={{
+                  width: `${Math.ceil(progress)}%`,
+                }}
+                className={`progress absolute transition-all duration-150 ease-out  h-[5px] bottom-0 right-0 bg-mainColor`}
+              ></div>
             )}
           </label>
           <div className="flex flex-col justify-between flex-1 p-10 text-sm text-gray-500 border border-gray-300 item">
@@ -138,7 +144,8 @@ const Write = () => {
                     <input
                       type="radio"
                       name={item?.value}
-                      // checked={state?.cat || category}
+                      defaultValue={category}
+                      checked={category === item?.value}
                       value={item?.value}
                       id={item?.value}
                       onChange={(e) => setCategory(e.target.value)}
@@ -157,14 +164,14 @@ const Write = () => {
             className="px-8 py-3 rounded-md bg-mainColor text-whiteColor"
             onClick={handleAddPosts}
           >
-            Update post
+            Cập nhật bài viết
           </button>
         ) : (
           <button
             className="px-8 py-3 rounded-md bg-mainColor text-whiteColor"
             onClick={handleAddPosts}
           >
-            Add post
+            Thêm Bài Viết
           </button>
         )}
       </div>
