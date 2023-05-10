@@ -13,6 +13,7 @@ import penImg from "../../../public/image/pen.png";
 import deleteImg from "../../../public/image/delete.jpg";
 import { toast } from "react-toastify";
 import List from "../../components/List";
+import Swal from "sweetalert2";
 const DetailPost = () => {
   const { id } = useParams();
   const [detailPosts, setDetailPosts] = useState([]);
@@ -36,9 +37,23 @@ const DetailPost = () => {
   // console.log("currentUser", currentUser);
 
   const handleDeletePosts = async () => {
-    const data = await deletePosts(token, detailPosts?.id);
-    if (data) toast.success(`${data}`);
-    navigate("/");
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, cancel!",
+      reverseButtons: true,
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        const data = await deletePosts(token, detailPosts?.id);
+        if (data) Swal.fire(`${data}`);
+        navigate("/");
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire("Cancelled", "Your imaginary file is safe :)", "error");
+      }
+    });
   };
   return (
     <div className="flex items-start gap-5 max-lg:flex-col">
