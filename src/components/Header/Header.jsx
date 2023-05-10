@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 import Button from "../Button";
 import avatar from "../../../public/image/profile-avatar.png";
 import { useAuthContext } from "../../context/authContext";
+import { usePostsContext } from "../../context/postContext";
 
 const Header = () => {
   const [isShowNav, setShowNav] = useState(false);
@@ -18,6 +19,8 @@ const Header = () => {
   const navigate = useNavigate();
 
   const { token, currentUser } = useAuthContext();
+  const { searchValue, handleSetSearch, handleSearchPost } = usePostsContext();
+
   const handleWrite = () => {
     if (!token) toast.warning("Vui lòng đăng nhập");
     if (token) navigate("/write");
@@ -83,8 +86,21 @@ const Header = () => {
             })}
         </ul>
         <div className="flex items-center gap-2 ml-8 border-b outline-none search border-mainColor">
-          <SearchIcon className="w-6 h-6" />
-          <input className="outline-none " placeholder="Tìm kiếm bài viết" />
+          <Link
+            to={`/search/?name=${searchValue}`}
+            onClick={() => {
+              if (searchValue.length === 0) return null;
+              handleSearchPost(searchValue);
+            }}
+          >
+            <SearchIcon className="w-6 h-6" />
+          </Link>
+          <input
+            value={searchValue}
+            className="outline-none "
+            placeholder="Tìm kiếm bài viết"
+            onChange={handleSetSearch}
+          />
         </div>
       </nav>
 

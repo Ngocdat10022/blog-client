@@ -7,6 +7,7 @@ import Write from "../pages/Write";
 import Account from "../pages/Account";
 import MainLayout from "../components/MainLayout/MainLayout";
 import DetailPost from "../pages/DetailPosts";
+import SearchPage from "../pages/Search";
 const Router = () => {
   return (
     <Routes>
@@ -15,6 +16,7 @@ const Router = () => {
         <Route path="/write" element={<Write />} />
         <Route path="/account" element={<Account />} />
         <Route path="/posts/:id" element={<DetailPost />} />
+        <Route path="/search" element={<SearchPage />} />
       </Route>
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />

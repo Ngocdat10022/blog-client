@@ -53,7 +53,7 @@ const Write = () => {
     title,
     des: getText(des),
     cat: category,
-    img: image,
+    img: image || state?.img,
     date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
   };
 
@@ -77,7 +77,7 @@ const Write = () => {
     <div className="mt-10 ">
       <h3 className="text-[32px]  font-bold text-mainColor ">Viết Bài</h3>
       <div className="flex gap-20 max-md:h-[900px] mt-20 max-md:flex-col max-md:gap-5 add">
-        <div className="flex flex-col gap-20 flex-5 content">
+        <div className="flex flex-col gap-20 max-md:flex-1 content">
           <input
             type="text"
             value={title}
@@ -104,7 +104,7 @@ const Write = () => {
               onChange={handleChangeImage}
             />
 
-            {image ? (
+            {image || state?.img ? (
               <img
                 alt="img-upload"
                 src={`${image || state?.img}`}

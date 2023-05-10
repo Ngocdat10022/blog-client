@@ -87,20 +87,18 @@ const DetailPost = () => {
       </div>
       <div className="flex-1 max-lg:w-full ">
         <h3 className="text-2xl font-bold text-center">Bài viết liên quan</h3>
-        <div className="grid grid-cols-1">
-          <List>
-            {postsSimilar.length > 0 &&
-              postsSimilar.map((post) => {
-                return (
-                  <Card
-                    title={post?.title}
-                    src={post?.img}
-                    id={post?.id}
-                    key={post?.id}
-                  />
-                );
-              })}
-          </List>
+        <div className="grid grid-cols-1 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1">
+          {postsSimilar.length > 0 &&
+            postsSimilar.map((post) => {
+              return (
+                <Card
+                  title={post?.title}
+                  src={post?.img}
+                  id={post?.id}
+                  key={post?.id}
+                />
+              );
+            })}
         </div>
       </div>
     </div>

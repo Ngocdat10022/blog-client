@@ -30,7 +30,7 @@ const Home = () => {
           <img src="./image/blog1.jpg" alt="logo" width={1600} height={1600} />
         </div>
       </div>
-      <Heading name="Posts" />
+      <Heading name="Bài Viết" />
       <List>
         {posts.length > 0 &&
           posts.map((post) => {

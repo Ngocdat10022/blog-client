@@ -2,6 +2,27 @@ import axios from "axios";
 
 const URL = `http://localhost:4000/api`;
 
+export const searchPosts = async (query) => {
+  const isQuery = query.includes("?name");
+  if (!isQuery) {
+    try {
+      const res = await axios.get(`${URL}/posts/search/?name=${query}`);
+      const data = res?.data;
+      return data;
+    } catch (error) {
+      console.log("error", error);
+    }
+  } else {
+    try {
+      const res = await axios.get(`${URL}/posts/search/${query}`);
+      const data = res?.data;
+      return data;
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+};
+
 export const getPosts = async (query) => {
   try {
     const res = await axios.get(`${URL}/posts${query}`);

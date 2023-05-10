@@ -6,13 +6,16 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter } from "react-router-dom";
 import AuthContextProvider from "./context/authContext.jsx";
+import PostContextProvider from "./context/postContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ToastContainer />
     <BrowserRouter>
       <AuthContextProvider>
-        <App />
+        <PostContextProvider>
+          <App />
+        </PostContextProvider>
       </AuthContextProvider>
     </BrowserRouter>
   </React.StrictMode>
