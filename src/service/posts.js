@@ -37,7 +37,6 @@ export const getDetailPosts = async (idPosts) => {
   try {
     const res = await axios.get(`${URL}/posts/${idPosts}`);
     const data = res?.data;
-    console.log("res", res);
     return data;
   } catch (error) {
     console.log("err", error);
@@ -48,7 +47,6 @@ export const getPostsSimilar = async (idPosts) => {
   try {
     const res = await axios.get(`${URL}/posts/similar/${idPosts}`);
     const data = res?.data;
-    console.log("res", res);
     return data;
   } catch (error) {
     console.log("err", error);

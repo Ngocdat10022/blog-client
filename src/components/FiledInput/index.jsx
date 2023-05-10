@@ -8,6 +8,7 @@ const FiledInput = ({ lable, name, type, onChange, value, className }) => {
       <span className="text-base ">{lable}</span>
       <input
         name={name}
+        value={value}
         onChange={onChange}
         type={isPassword ? "text" : "password"}
         className="flex-1 p-4 pr-8 border-none rounded-md outline-none input bg-grayColor"

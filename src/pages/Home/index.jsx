@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
 import Heading from "../../components/Heading";
 import List from "../../components/List";
 import Card from "../../components/Card";
-import { getPosts } from "../../service/posts";
+import { usePostsContext } from "../../context/postContext";
+import { useLocation } from "react-router-dom";
+import LoadingSkeleton from "../../components/LoadingSkeleton";
 
 const Home = () => {
-  const [posts, setPosts] = useState([]);
   const { search } = useLocation();
 
+  const { posts, loading, handleGetPosts } = usePostsContext();
   useEffect(() => {
-    getPosts(search).then((data) => {
-      setPosts(data);
-    });
+    handleGetPosts();
   }, [search]);
+
   return (
     <div className="wrapper-home">
       <div className="flex items-center gap-5 max-md:flex-col-reverse">
@@ -31,19 +31,49 @@ const Home = () => {
         </div>
       </div>
       <Heading name="Bài Viết" />
-      <List>
-        {posts.length > 0 &&
-          posts.map((post) => {
-            return (
-              <Card
-                key={post?.id}
-                title={post?.title}
-                src={post?.img}
-                id={post?.id}
-              />
-            );
-          })}
-      </List>
+
+      {!loading ? (
+        <List>
+          {posts.length > 0 &&
+            posts.map((post) => {
+              return (
+                <Card
+                  key={post?.id}
+                  title={post?.title}
+                  src={post?.img}
+                  id={post?.id}
+                />
+              );
+            })}
+        </List>
+      ) : (
+        <List>
+          <div className="flex flex-col gap-4 p-5 rounded-md shadow-2xl card ">
+            <LoadingSkeleton height="200px" borderRadius="5px" />
+            <LoadingSkeleton height="30px" borderRadius="5px" />
+          </div>
+          <div className="flex flex-col gap-4 p-5 rounded-md shadow-2xl card ">
+            <LoadingSkeleton height="200px" borderRadius="5px" />
+            <LoadingSkeleton height="30px" borderRadius="5px" />
+          </div>
+          <div className="flex flex-col gap-4 p-5 rounded-md shadow-2xl card ">
+            <LoadingSkeleton height="200px" borderRadius="5px" />
+            <LoadingSkeleton height="30px" borderRadius="5px" />
+          </div>
+          <div className="flex flex-col gap-4 p-5 rounded-md shadow-2xl card ">
+            <LoadingSkeleton height="200px" borderRadius="5px" />
+            <LoadingSkeleton height="30px" borderRadius="5px" />
+          </div>
+          <div className="flex flex-col gap-4 p-5 rounded-md shadow-2xl card ">
+            <LoadingSkeleton height="200px" borderRadius="5px" />
+            <LoadingSkeleton height="30px" borderRadius="5px" />
+          </div>
+          <div className="flex flex-col gap-4 p-5 rounded-md shadow-2xl card ">
+            <LoadingSkeleton height="200px" borderRadius="5px" />
+            <LoadingSkeleton height="30px" borderRadius="5px" />
+          </div>
+        </List>
+      )}
     </div>
   );
 };

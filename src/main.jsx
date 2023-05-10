@@ -9,7 +9,7 @@ import AuthContextProvider from "./context/authContext.jsx";
 import PostContextProvider from "./context/postContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
+  <>
     <ToastContainer />
     <BrowserRouter>
       <AuthContextProvider>
@@ -18,5 +18,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </PostContextProvider>
       </AuthContextProvider>
     </BrowserRouter>
-  </React.StrictMode>
+  </>
 );

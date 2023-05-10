@@ -1,25 +1,32 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import FiledInput from "../../components/FiledInput";
-import { register } from "../../service/auth";
 import { toast } from "react-toastify";
+import { useAuthContext } from "../../context/authContext";
 
 const Register = () => {
-  const [value, setValue] = useState({ username: "", email: "", password: "" });
+  const { register, loading } = useAuthContext();
+  console.log("loading", loading);
+  const [values, setValues] = useState({
+    username: "",
+    email: "",
+    password: "",
+  });
   const onChangeValue = (e) => {
-    setValue((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-
   const navigate = useNavigate();
-
-  console.log("value", value);
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    const data = await register(value);
-    if (data) {
-      toast.success(`${data}`);
-      navigate("/login");
+    if (!values?.username || !values?.password || !values?.email) {
+      toast.error("Các trường không được để trống");
+    } else {
+      const data = await register(values);
+      if (data) {
+        toast.success(`${data}`);
+        navigate("/login");
+      }
     }
   };
   return (
@@ -63,7 +70,13 @@ const Register = () => {
           onClick={handleRegister}
           className="flex items-center justify-center w-full p-2 mt-3 cursor-pointer text-whiteColor bg-mainColor"
         >
-          <span>Đăng Kí</span>
+          <span>
+            {loading ? (
+              <div className="w-[30px] h-[30px] border-whiteColor border-2 border-solid animate-spin rounded-full border-x-mainColor"></div>
+            ) : (
+              "Đăng Kí"
+            )}
+          </span>
         </button>
         <span>
           <Link className="block m-3 text-center text-mainColor" to="/login">

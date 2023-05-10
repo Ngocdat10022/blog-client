@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from "react";
 import UploadIcon from "../../../public/Icons/UploadIcon";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import uploadImg from "../../../public/image/img-upload.png";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import useUploaImage from "../../hooks/useUploadImage";
 import { useAuthContext } from "../../context/authContext";
-import { toast } from "react-toastify";
-import { addPosts, updatePosts } from "../../service/posts";
 import moment from "moment/moment";
+import { usePostsContext } from "../../context/postContext";
 
 const Write = () => {
-  const state = useLocation().state;
-
-  const [des, setDes] = useState(state?.des);
-  const [title, setTitle] = useState(state?.title);
-  const [category, setCategory] = useState(state?.cat || "công nghệ");
   const listCategory = [
     {
       name: "Công Nghệ",
@@ -42,13 +36,18 @@ const Write = () => {
       value: "đầu bếp",
     },
   ];
-  const navigate = useNavigate();
+  const state = useLocation().state;
+
+  const [des, setDes] = useState(state?.des);
+  const [title, setTitle] = useState(state?.title);
+  const [category, setCategory] = useState(state?.cat || "công nghệ");
   const { handleChangeImage, loading, image, progress } = useUploaImage();
   const { token } = useAuthContext();
   const getText = (html) => {
     const doc = new DOMParser().parseFromString(html, "text/html");
     return doc.body.textContent;
   };
+  const { handleAddPosts } = usePostsContext();
   const values = {
     title,
     des: getText(des),
@@ -56,20 +55,6 @@ const Write = () => {
     img: image || state?.img,
     date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss"),
   };
-
-  const handleAddPosts = async () => {
-    if (state) {
-      const idPosts = state?.id;
-      const data = await updatePosts(values, token, idPosts);
-      if (data) toast.success("Update posts successfully");
-      navigate("/");
-    } else {
-      const data = await addPosts(values, token);
-      if (data) toast.success("addPosts successfully");
-      navigate("/");
-    }
-  };
-
   useEffect(() => {
     if (!token) navigate("/");
   });
@@ -80,6 +65,7 @@ const Write = () => {
         <div className="flex flex-col gap-20 max-md:flex-1 content">
           <input
             type="text"
+            defaultValue=""
             value={title}
             name="title"
             placeholder="Tiêu đề"
@@ -89,6 +75,7 @@ const Write = () => {
           <div className="editorContainer h-[300px] overflow-scroll border-solid border-mainColor border-gray-300">
             <ReactQuill
               className="editor"
+              defaultValue=""
               theme="snow"
               value={des}
               onChange={setDes}
@@ -144,7 +131,6 @@ const Write = () => {
                     <input
                       type="radio"
                       name={item?.value}
-                      defaultValue={category}
                       checked={category === item?.value}
                       value={item?.value}
                       id={item?.value}
@@ -162,14 +148,14 @@ const Write = () => {
         {state ? (
           <button
             className="px-8 py-3 rounded-md bg-mainColor text-whiteColor"
-            onClick={handleAddPosts}
+            onClick={() => handleAddPosts(state, values, token)}
           >
             Cập nhật bài viết
           </button>
         ) : (
           <button
             className="px-8 py-3 rounded-md bg-mainColor text-whiteColor"
-            onClick={handleAddPosts}
+            onClick={() => handleAddPosts(state, values, token)}
           >
             Thêm Bài Viết
           </button>

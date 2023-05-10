@@ -1,47 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useAuthContext } from "../../context/authContext";
 import { useNavigate } from "react-router-dom";
 import useUploaImage from "../../hooks/useUploadImage";
-import { changePassword, updateProfile } from "../../service/user";
 import avatar from "../../../public/image/profile-avatar.png";
-import { toast } from "react-toastify";
 import FiledInput from "../../components/FiledInput";
 
 const Account = () => {
-  const { token, currentUser, logout, setAccessToken, setUser } =
-    useAuthContext();
-  const [username, setUserName] = useState(currentUser?.username);
-  const [email, setEmail] = useState(currentUser?.email);
   const { handleChangeImage, image, loading } = useUploaImage();
-  const [password, setPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [isChangePassword, setIsChangePassword] = useState(false);
+  const {
+    token,
+    currentUser,
+    logout,
+    handleSetValueProfile,
+    valuesProfile,
+    handleUpdateProfile,
+    handleSetValuesPass,
+    valuesPass,
+    handleChangePassword,
+    isChangePassword,
+    setIsChangePassword,
+  } = useAuthContext();
 
-  console.log("password", password, newPassword);
   const navigate = useNavigate();
   useEffect(() => {
     if (!token) navigate("/");
   });
-  const values = { username, email };
-  console.log("values", values);
-  const handleUpdateProfile = async () => {
-    const data = await updateProfile(
-      { ...values, avatar: image || currentUser?.avatar },
-      token
-    );
-    if (data) {
-      console.log("data", data);
-      setAccessToken(data?.accessToken);
-      setUser(data?.findUser);
-      toast.success("Update Profile successfully");
-    }
-  };
 
-  const handleChangePassword = async () => {
-    const data = await changePassword({ password, newPassword }, token);
-    if (data) toast.success("Change password successfully");
-    setIsChangePassword(!isChangePassword);
-  };
   return (
     <div className="flex items-center justify-center w-full ">
       <div className="bg-whiteColor border-2 border-mainColor border-solid rounded-md w-[90%] my-20 h-auto p-2">
@@ -89,17 +73,19 @@ const Account = () => {
               lable="Chỉnh sửa tên đăng nhập:"
               className="flex-col gap-2"
               type="text"
-              value={username}
+              name="username"
+              value={valuesProfile?.username}
               placeholder="Tên đăng nhập"
-              onChange={(e) => setUserName(e.target.value)}
+              onChange={handleSetValueProfile}
             />
             <FiledInput
               lable="Chỉnh sửa email:"
               className="flex-col gap-2"
               type="email"
-              value={email}
+              name="email"
+              value={valuesProfile?.email}
               placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleSetValueProfile}
             />
             {isChangePassword ? (
               <>
@@ -107,21 +93,23 @@ const Account = () => {
                   lable="Mật khẩu:"
                   className="flex-col gap-2"
                   type="password"
-                  value={password}
+                  name="password"
+                  value={valuesPass?.password}
                   placeholder="Password"
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={handleSetValuesPass}
                 />
                 <FiledInput
                   lable="Mật khẩu mới:"
                   className="flex-col gap-2"
                   type="password"
-                  value={newPassword}
+                  value={valuesPass?.newPassword}
+                  name="newPassword"
                   placeholder="Password"
-                  onChange={(e) => setNewPassword(e.target.value)}
+                  onChange={handleSetValuesPass}
                 />
                 <div className="flex items-center justify-center w-full gap-5 ">
                   <button
-                    onClick={handleChangePassword}
+                    onClick={() => handleChangePassword(token)}
                     className="px-6 py-2 w-[200px] rounded-md bg-mainColor text-whiteColor "
                   >
                     Đổi mật khẩu
@@ -148,7 +136,7 @@ const Account = () => {
             Đăng Xuất
           </button>
           <button
-            onClick={handleUpdateProfile}
+            onClick={() => handleUpdateProfile(image)}
             className="px-6 py-2 bg-red-600 border-2 border-solid rounded-md text-textColor border-mainColor"
           >
             Lưu

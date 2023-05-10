@@ -7,7 +7,7 @@ const Login = () => {
   const onChangeValue = (e) => {
     setValue((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  const { login } = useAuthContext();
+  const { login, loading } = useAuthContext();
 
   const handlelogin = async (e) => {
     e.preventDefault();
@@ -48,7 +48,13 @@ const Login = () => {
             onClick={handlelogin}
             className="flex items-center justify-center w-full p-2 mt-3 cursor-pointer text-whiteColor bg-mainColor"
           >
-            <span>Đăng Nhập</span>
+            <span>
+              {loading ? (
+                <div className="w-[30px] h-[30px] border-whiteColor border-2 border-solid animate-spin rounded-full border-x-mainColor"></div>
+              ) : (
+                "Đăng Nhập"
+              )}
+            </span>
           </button>
           <Link className="block m-3 text-center text-mainColor" to="/register">
             Đăng Kí tại đây!
