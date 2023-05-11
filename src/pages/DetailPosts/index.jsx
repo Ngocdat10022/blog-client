@@ -7,6 +7,8 @@ import penImg from "../../../public/image/pen.png";
 import deleteImg from "../../../public/image/delete.jpg";
 import { usePostsContext } from "../../context/postContext";
 import LoadingSkeleton from "../../components/LoadingSkeleton";
+import moment from "moment/moment";
+
 const DetailPost = () => {
   const { id } = useParams();
   const { currentUser, token } = useAuthContext();
@@ -22,7 +24,6 @@ const DetailPost = () => {
   useEffect(() => {
     handleGetDetailPosts(id);
   }, [id]);
-
   useEffect(() => {
     handleGetPostsSimilar(id);
   }, [id]);
@@ -62,6 +63,9 @@ const DetailPost = () => {
             />
             <div className="flex flex-col items-start">
               <span className="text-sm font-bold">{detailPosts?.username}</span>
+              <span className="text-sm font-bold">
+                {moment(detailPosts?.date).format("YYYY-MM-DD")}
+              </span>
               {currentUser?.username === detailPosts?.username && (
                 <div className="flex items-center justify-center gap-2">
                   <Link

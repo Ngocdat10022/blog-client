@@ -25,6 +25,7 @@ const PostContextProvider = ({ children }) => {
   const [posts, setPosts] = useState([]);
   const { search } = useLocation();
   const navigate = useNavigate();
+
   const handleSearchPost = async (query) => {
     setLoading(true);
     const data = await searchPosts(searchValue || query);
