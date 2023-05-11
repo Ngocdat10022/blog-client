@@ -21,11 +21,11 @@ const DetailPost = () => {
 
   useEffect(() => {
     handleGetDetailPosts(id);
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     handleGetPostsSimilar(id);
-  }, []);
+  }, [id]);
   return (
     <div className="flex items-start gap-5 max-lg:flex-col">
       {!loading ? (
