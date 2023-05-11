@@ -17,7 +17,34 @@ const SearchPage = () => {
   return (
     <div>
       <Heading name="Bài Viết" />
-      {!loading ? (
+      {loading ? (
+        <List>
+          <div className="flex flex-col gap-4 p-5 rounded-md shadow-2xl card ">
+            <LoadingSkeleton height="200px" borderRadius="5px" />
+            <LoadingSkeleton height="50px" borderRadius="5px" />
+          </div>
+          <div className="flex flex-col gap-4 p-5 rounded-md shadow-2xl card ">
+            <LoadingSkeleton height="200px" borderRadius="5px" />
+            <LoadingSkeleton height="50px" borderRadius="5px" />
+          </div>
+          <div className="flex flex-col gap-4 p-5 rounded-md shadow-2xl card ">
+            <LoadingSkeleton height="200px" borderRadius="5px" />
+            <LoadingSkeleton height="50px" borderRadius="5px" />
+          </div>
+          <div className="flex flex-col gap-4 p-5 rounded-md shadow-2xl card ">
+            <LoadingSkeleton height="200px" borderRadius="5px" />
+            <LoadingSkeleton height="50px" borderRadius="5px" />
+          </div>{" "}
+          <div className="flex flex-col gap-4 p-5 rounded-md shadow-2xl card ">
+            <LoadingSkeleton height="200px" borderRadius="5px" />
+            <LoadingSkeleton height="50px" borderRadius="5px" />
+          </div>{" "}
+          <div className="flex flex-col gap-4 p-5 rounded-md shadow-2xl card ">
+            <LoadingSkeleton height="200px" borderRadius="5px" />
+            <LoadingSkeleton height="50px" borderRadius="5px" />
+          </div>
+        </List>
+      ) : (
         <List>
           {postsSearch &&
             postsSearch.length > 0 &&
@@ -31,33 +58,6 @@ const SearchPage = () => {
                 />
               );
             })}
-        </List>
-      ) : (
-        <List>
-          <div className="flex flex-col gap-4 p-5 rounded-md shadow-2xl card ">
-            <LoadingSkeleton height="200px" borderRadius="5px" />
-            <LoadingSkeleton height="50px" borderRadius="5px" />
-          </div>
-          <div className="flex flex-col gap-4 p-5 rounded-md shadow-2xl card ">
-            <LoadingSkeleton height="200px" borderRadius="5px" />
-            <LoadingSkeleton height="50px" borderRadius="5px" />
-          </div>
-          <div className="flex flex-col gap-4 p-5 rounded-md shadow-2xl card ">
-            <LoadingSkeleton height="200px" borderRadius="5px" />
-            <LoadingSkeleton height="50px" borderRadius="5px" />
-          </div>
-          <div className="flex flex-col gap-4 p-5 rounded-md shadow-2xl card ">
-            <LoadingSkeleton height="200px" borderRadius="5px" />
-            <LoadingSkeleton height="50px" borderRadius="5px" />
-          </div>{" "}
-          <div className="flex flex-col gap-4 p-5 rounded-md shadow-2xl card ">
-            <LoadingSkeleton height="200px" borderRadius="5px" />
-            <LoadingSkeleton height="50px" borderRadius="5px" />
-          </div>{" "}
-          <div className="flex flex-col gap-4 p-5 rounded-md shadow-2xl card ">
-            <LoadingSkeleton height="200px" borderRadius="5px" />
-            <LoadingSkeleton height="50px" borderRadius="5px" />
-          </div>
         </List>
       )}
     </div>

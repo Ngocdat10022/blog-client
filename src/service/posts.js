@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const URL = `http://localhost:4000/api`;
 
@@ -18,7 +19,7 @@ export const searchPosts = async (query) => {
       const data = res?.data;
       return data;
     } catch (error) {
-      console.log("error", error);
+      return error;
     }
   }
 };
@@ -29,7 +30,7 @@ export const getPosts = async (query) => {
     const data = res?.data;
     return data;
   } catch (error) {
-    console.log("error", error);
+    return error;
   }
 };
 
@@ -39,7 +40,7 @@ export const getDetailPosts = async (idPosts) => {
     const data = res?.data;
     return data;
   } catch (error) {
-    console.log("err", error);
+    return error;
   }
 };
 
@@ -49,7 +50,7 @@ export const getPostsSimilar = async (idPosts) => {
     const data = res?.data;
     return data;
   } catch (error) {
-    console.log("err", error);
+    return error;
   }
 };
 

@@ -28,10 +28,32 @@ const DetailPost = () => {
   }, [id]);
   return (
     <div className="flex items-start gap-5 max-lg:flex-col">
-      {!loading ? (
+      {loading ? (
+        <div className="flex flex-col max-lg:w-full gap-5 items-start w-[70%]">
+          <LoadingSkeleton width="100%" height="400px" />
+          <div className="flex items-center gap-3">
+            <LoadingSkeleton width="50px" height="50px" radius="100%" />
+            <div className="flex flex-col items-start ">
+              <LoadingSkeleton width="80px" height="10px" />
+              {currentUser?.username === detailPosts?.username && (
+                <div className="flex items-center justify-center gap-2">
+                  <LoadingSkeleton width="30px" height="30px" />
+                  <LoadingSkeleton width="30px" height="30px" />
+                </div>
+              )}
+            </div>
+          </div>
+          <div className="text-[44px] max-md:text-4xl font-bold">
+            <LoadingSkeleton width="700px" height="30px" />
+          </div>
+          <div className="text-xl text-textColor">
+            <LoadingSkeleton width="700px" height="200px" />
+          </div>
+        </div>
+      ) : (
         <div className="flex flex-col max-lg:w-full gap-5 items-start w-[70%]">
           <div className="w-full">
-            <img src={detailPosts?.img} className="w-full" />
+            <img src={detailPosts?.img} className="w-full max-h-[400px]" />
           </div>
           <div className="flex items-center gap-3">
             <img
@@ -73,28 +95,6 @@ const DetailPost = () => {
             <p className=" first-letter:text-7xl first-letter:font-bold">
               {detailPosts?.des}
             </p>
-          </div>
-        </div>
-      ) : (
-        <div className="flex flex-col max-lg:w-full gap-5 items-start w-[70%]">
-          <LoadingSkeleton width="100%" height="400px" />
-          <div className="flex items-center gap-3">
-            <LoadingSkeleton width="50px" height="50px" radius="100%" />
-            <div className="flex flex-col items-start ">
-              <LoadingSkeleton width="80px" height="10px" />
-              {currentUser?.username === detailPosts?.username && (
-                <div className="flex items-center justify-center gap-2">
-                  <LoadingSkeleton width="30px" height="30px" />
-                  <LoadingSkeleton width="30px" height="30px" />
-                </div>
-              )}
-            </div>
-          </div>
-          <div className="text-[44px] max-md:text-4xl font-bold">
-            <LoadingSkeleton width="700px" height="30px" />
-          </div>
-          <div className="text-xl text-textColor">
-            <LoadingSkeleton width="700px" height="200px" />
           </div>
         </div>
       )}

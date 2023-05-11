@@ -28,8 +28,12 @@ const PostContextProvider = ({ children }) => {
   const handleSearchPost = async (query) => {
     setLoading(true);
     const data = await searchPosts(searchValue || query);
-    setPostsSearch(data);
-    setLoading(false);
+    if (Array.isArray(data)) {
+      setPostsSearch(data);
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
   };
 
   const handleSetSearch = (e) => {
@@ -40,33 +44,51 @@ const PostContextProvider = ({ children }) => {
     if (state) {
       const idPosts = state?.id;
       const data = await updatePosts(values, token, idPosts);
-      if (data) toast.success("Update posts successfully");
-      navigate("/");
+      if (data) {
+        toast.success("Update posts successfully");
+        navigate("/");
+      }
     } else {
       const data = await addPosts(values, token);
-      if (data) toast.success("addPosts successfully");
-      navigate("/");
+      if (data) {
+        toast.success("addPosts successfully");
+        navigate("/");
+      }
     }
   };
 
   const handleGetPosts = async () => {
     setLoading(true);
     const data = await getPosts(search);
-    setPosts(data);
-    setLoading(false);
+    if (Array.isArray(data)) {
+      setPosts(data);
+      setLoading(false);
+    } else {
+      setLoading(trưe);
+    }
   };
 
   const handleGetDetailPosts = async (id) => {
     setLoading(true);
     const data = await getDetailPosts(id);
-    setDetailPosts(data[0]);
-    setLoading(false);
+
+    if (Array.isArray(data)) {
+      setDetailPosts(data[0]);
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
   };
   const handleGetPostsSimilar = async (id) => {
     setLoading(true);
     const data = await getPostsSimilar(id);
-    setPostsSimilar(data);
-    setLoading(false);
+
+    if (Array.isArray(data)) {
+      setPostsSimilar(data);
+      setLoading(false);
+    } else {
+      setLoading(true);
+    }
   };
 
   const handleDeletePosts = async (token, id) => {
