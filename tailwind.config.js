@@ -16,6 +16,7 @@ export default {
       blackColor: "#222",
       grayColor: "#edebeb",
       textColor: "#646464",
+      errorColor: "#d60404",
     },
     extend: {},
   },

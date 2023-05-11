@@ -2,16 +2,40 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import FiledInput from "../../components/FiledInput";
 import { useAuthContext } from "../../context/authContext";
+import { toast } from "react-toastify";
 const Login = () => {
-  const [value, setValue] = useState({ username: "", email: "", password: "" });
+  const [values, setValues] = useState({
+    username: "",
+    password: "",
+  });
+
+  const [error, setError] = useState({
+    errName: null,
+    errPass: null,
+  });
+
   const onChangeValue = (e) => {
-    setValue((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
   const { login, loading } = useAuthContext();
 
   const handlelogin = async (e) => {
     e.preventDefault();
-    await login(value);
+    if (!values?.username.trim() || !values?.password.trim()) {
+      setError((prev) => ({
+        ...prev,
+        errName: "Không được để trống",
+        errPass: "Không được để trống",
+      }));
+    } else {
+      setError((prev) => ({
+        ...prev,
+        errName: null,
+        errPass: null,
+      }));
+      // e.preventDefault();
+      await login(values);
+    }
   };
   return (
     <>
@@ -36,6 +60,7 @@ const Login = () => {
             lable="Tên đăng nhập"
             type="text"
             onChange={onChangeValue}
+            errorMessage={error?.errName}
           />
           <FiledInput
             className="flex-col"
@@ -43,6 +68,7 @@ const Login = () => {
             lable="Mật Khẩu"
             type="password"
             onChange={onChangeValue}
+            errorMessage={error?.errPass}
           />
           <button
             onClick={handlelogin}
@@ -50,7 +76,10 @@ const Login = () => {
           >
             <span>
               {loading ? (
-                <div className="w-[30px] h-[30px] border-whiteColor border-2 border-solid animate-spin rounded-full border-x-mainColor"></div>
+                <div
+                  className="w-[30px] h-[30px] border-whiteColor border-2 border-solid animate-spin rounded-full border-x-mainColor"
+                  onClick={handlelogin}
+                ></div>
               ) : (
                 "Đăng Nhập"
               )}

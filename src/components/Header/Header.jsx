@@ -105,7 +105,7 @@ const Header = () => {
       </nav>
 
       <div className="flex items-center gap-4">
-        {token ? (
+        {!!token ? (
           <div className="cursor-pointer avatar">
             <Link to="/account">
               <img
@@ -123,14 +123,16 @@ const Header = () => {
             <Button name="Đăng Kí" to="register" />
           </div>
         )}
-        <div>
-          <button
-            onClick={handleWrite}
-            className="w-[60px] h-[60px] rounded-full bg-mainColor text-whiteColor text-sm"
-          >
-            Viết Bài
-          </button>
-        </div>
+        {!!token && (
+          <div>
+            <button
+              onClick={handleWrite}
+              className="w-[60px] h-[60px] rounded-full bg-mainColor text-whiteColor text-sm"
+            >
+              Viết Bài
+            </button>
+          </div>
+        )}
       </div>
     </header>
   );

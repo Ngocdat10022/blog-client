@@ -25,7 +25,7 @@ const Account = () => {
   useEffect(() => {
     if (!token) navigate("/");
   });
-
+  console.log("valuesProfile", valuesProfile);
   return (
     <div className="flex items-center justify-center w-full ">
       <div className="bg-whiteColor border-2 border-mainColor border-solid rounded-md w-[90%] my-20 h-auto p-2">

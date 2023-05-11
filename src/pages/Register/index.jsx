@@ -6,12 +6,18 @@ import { useAuthContext } from "../../context/authContext";
 
 const Register = () => {
   const { register, loading } = useAuthContext();
-  console.log("loading", loading);
   const [values, setValues] = useState({
     username: "",
     email: "",
     password: "",
   });
+
+  const [error, setError] = useState({
+    errName: null,
+    errEmail: null,
+    errPass: null,
+  });
+
   const onChangeValue = (e) => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
@@ -19,13 +25,40 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    if (!values?.username || !values?.password || !values?.email) {
-      toast.error("Các trường không được để trống");
+    if (
+      !values?.username.trim() ||
+      !values?.password.trim() ||
+      !values?.email.trim()
+    ) {
+      setError((prev) => ({
+        ...prev,
+        errName: "Không được để trống",
+        errEmail: "Không được để trống ",
+        errPass: "Không được để trống",
+      }));
     } else {
-      const data = await register(values);
-      if (data) {
-        toast.success(`${data}`);
-        navigate("/login");
+      const isPass = values?.password.trim().length < 8;
+      const isEmail = values?.email.includes("@gmail.com");
+      if (!isEmail)
+        setError((prev) => ({
+          ...prev,
+          errName: null,
+          errEmail: "Email không hợp lệ",
+          errPass: null,
+        }));
+      if (isPass)
+        setError((prev) => ({
+          ...prev,
+          errName: null,
+          errEmail: null,
+          errPass: "Mật khẩu phải lớn hơn 8 kí tự",
+        }));
+      if (isEmail && !isPass) {
+        const data = await register(values);
+        if (data) {
+          toast.success(`${data}`);
+          navigate("/login");
+        }
       }
     }
   };
@@ -51,6 +84,7 @@ const Register = () => {
           lable="Tên đăng nhập"
           type="text"
           onChange={onChangeValue}
+          errorMessage={error?.errName}
         />
         <FiledInput
           className="flex-col"
@@ -58,6 +92,7 @@ const Register = () => {
           lable="Email"
           type="email"
           onChange={onChangeValue}
+          errorMessage={error?.errEmail}
         />
         <FiledInput
           className="flex-col"
@@ -65,6 +100,7 @@ const Register = () => {
           lable="Mật Khẩu"
           type="password"
           onChange={onChangeValue}
+          errorMessage={error?.errPass}
         />
         <button
           onClick={handleRegister}

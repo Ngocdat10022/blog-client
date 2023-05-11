@@ -34,7 +34,8 @@ const Home = () => {
 
       {!loading ? (
         <List>
-          {posts.length > 0 &&
+          {posts &&
+            posts.length > 0 &&
             posts.map((post) => {
               return (
                 <Card

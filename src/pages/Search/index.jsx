@@ -19,7 +19,8 @@ const SearchPage = () => {
       <Heading name="Bài Viết" />
       {!loading ? (
         <List>
-          {postsSearch.length > 0 &&
+          {postsSearch &&
+            postsSearch.length > 0 &&
             postsSearch.map((post) => {
               return (
                 <Card

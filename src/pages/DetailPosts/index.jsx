@@ -130,7 +130,8 @@ const DetailPost = () => {
             </div>
           ) : (
             <div className="grid grid-cols-1 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1">
-              {postsSimilar.length > 0 &&
+              {postsSimilar &&
+                postsSimilar.length > 0 &&
                 postsSimilar.map((post) => {
                   return (
                     <Card

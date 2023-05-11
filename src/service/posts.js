@@ -63,7 +63,11 @@ export const addPosts = async (values, token) => {
     const data = res?.data;
     return data;
   } catch (error) {
-    console.log("err", error);
+    if (error?.response?.data) {
+      toast.error(`${error?.response?.data}`);
+    } else {
+      toast.error(`${error?.message}`);
+    }
   }
 };
 
@@ -77,7 +81,11 @@ export const updatePosts = async (values, token, id) => {
     const data = res?.data;
     return data;
   } catch (error) {
-    console.log("err", error);
+    if (error?.response?.data) {
+      toast.error(`${error?.response?.data}`);
+    } else {
+      toast.error(`${error?.message}`);
+    }
   }
 };
 
@@ -91,6 +99,10 @@ export const deletePosts = async (token, id) => {
     const data = res?.data;
     return data;
   } catch (error) {
-    console.log("err", error);
+    if (error?.response?.data) {
+      toast.error(`${error?.response?.data}`);
+    } else {
+      toast.error(`${error?.message}`);
+    }
   }
 };

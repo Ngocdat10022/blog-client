@@ -49,6 +49,7 @@ const AuthContextProvider = ({ children }) => {
       return res.data;
     } catch (error) {
       if (error?.response?.data) {
+        setLoading(false);
         toast.error(`${error?.response?.data}`);
       } else {
         toast.error(`${error?.message}`);
@@ -65,9 +66,14 @@ const AuthContextProvider = ({ children }) => {
       setLoading(false);
       toast("Login successfully");
       navigate("/");
-    } catch (err) {
-      console.log("error", err);
-      if (err?.response?.data) toast.error(`${err?.response?.data}`);
+    } catch (error) {
+      setLoading(false);
+      if (error?.response?.data) {
+        setLoading(false);
+        toast.error(`${error?.response?.data}`);
+      } else {
+        toast.error(`${error?.message}`);
+      }
     }
   };
 
