@@ -13,12 +13,7 @@ export const updateProfile = async (values, token) => {
     const data = res?.data;
     return data;
   } catch (error) {
-    if (error?.response?.data) {
-      toast.error(`${error?.response?.data}`);
-    } else {
-      toast.error(`${error?.message}`);
-    }
-    console.log("err", error);
+    return error;
   }
 };
 
@@ -32,11 +27,6 @@ export const changePassword = async (values, token) => {
     const data = res?.data;
     return data;
   } catch (error) {
-    if (error?.response?.data) {
-      toast.error(`${error?.response?.data}`);
-    } else {
-      toast.error(`${error?.message}`);
-    }
-    console.log("err", error);
+    return error;
   }
 };

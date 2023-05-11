@@ -6,7 +6,8 @@ import avatar from "../../../public/image/profile-avatar.png";
 import FiledInput from "../../components/FiledInput";
 
 const Account = () => {
-  const { handleChangeImage, image, loading } = useUploaImage();
+  const { handleChangeImage, image, loading: loadingImage } = useUploaImage();
+
   const {
     token,
     currentUser,
@@ -19,13 +20,12 @@ const Account = () => {
     handleChangePassword,
     isChangePassword,
     setIsChangePassword,
+    loading: loadingHandleProfile,
   } = useAuthContext();
-
   const navigate = useNavigate();
   useEffect(() => {
     if (!token) navigate("/");
   });
-  console.log("valuesProfile", valuesProfile);
   return (
     <div className="flex items-center justify-center w-full ">
       <div className="bg-whiteColor border-2 border-mainColor border-solid rounded-md w-[90%] my-20 h-auto p-2">
@@ -39,7 +39,7 @@ const Account = () => {
                 src={`${image || currentUser?.avatar || avatar}`}
                 className="w-full h-full bg-cover "
               />
-              {loading && (
+              {loadingImage && (
                 <div
                   className={`flex items-center justify-center absolute  bg-textColor/50  inset-0 rounded-full transition-all duration-150 ease-out `}
                 >
@@ -137,9 +137,13 @@ const Account = () => {
           </button>
           <button
             onClick={() => handleUpdateProfile(image)}
-            className="px-6 py-2 bg-red-600 border-2 border-solid rounded-md text-textColor border-mainColor"
+            className="bg-red-600 flex items-center justify-center border-2 border-solid rounded-md w-[100px] h-[40px] text-textColor border-mainColor"
           >
-            Lưu
+            {loadingHandleProfile ? (
+              <div className="w-[30px] h-[30px] border-whiteColor border-2 border-solid animate-spin rounded-full border-x-mainColor"></div>
+            ) : (
+              "Lưu"
+            )}
           </button>
         </div>
       </div>

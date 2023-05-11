@@ -64,7 +64,7 @@ const PostContextProvider = ({ children }) => {
       setPosts(data);
       setLoading(false);
     } else {
-      setLoading(trưe);
+      setLoading(true);
     }
   };
 

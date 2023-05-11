@@ -49,11 +49,11 @@ const AuthContextProvider = ({ children }) => {
       return res.data;
     } catch (error) {
       if (error?.response?.data) {
-        setLoading(false);
         toast.error(`${error?.response?.data}`);
       } else {
         toast.error(`${error?.message}`);
       }
+      setLoading(false);
     }
   };
 
@@ -67,13 +67,12 @@ const AuthContextProvider = ({ children }) => {
       toast("Login successfully");
       navigate("/");
     } catch (error) {
-      setLoading(false);
       if (error?.response?.data) {
-        setLoading(false);
         toast.error(`${error?.response?.data}`);
       } else {
         toast.error(`${error?.message}`);
       }
+      setLoading(false);
     }
   };
 
@@ -86,21 +85,38 @@ const AuthContextProvider = ({ children }) => {
   };
 
   const handleUpdateProfile = async (image) => {
+    setLoading(true);
     const data = await updateProfile(
       { ...valuesProfile, avatar: image || currentUser?.avatar },
       token
     );
-    if (data) {
+    if (data.hasOwnProperty("findUser")) {
       setAccessToken(data?.accessToken);
       setUser(data?.findUser);
       toast.success("Update Profile successfully");
+      setLoading(false);
+    } else {
+      setLoading(false);
+      if (data?.response?.data) {
+        toast.error(`${data?.response?.data?.message}`);
+      } else {
+        toast.error(`${data?.message}`);
+      }
     }
   };
 
   const handleChangePassword = async (token) => {
     const data = await changePassword(valuesPass, token);
-    if (data) toast.success("Change password successfully");
-    setIsChangePassword(!isChangePassword);
+    if (typeof data === "string") {
+      toast.success(`${data}`);
+      setIsChangePassword(!isChangePassword);
+    } else {
+      if (data?.response?.data?.message) {
+        toast.error(`${data?.response?.data?.message}`);
+      } else {
+        toast.error(`${data?.message}`);
+      }
+    }
   };
   useEffect(() => {
     setCurrentUser(user);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import FiledInput from "../../components/FiledInput";
 import { useAuthContext } from "../../context/authContext";
@@ -18,7 +18,6 @@ const Login = () => {
     setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
   const { login, loading } = useAuthContext();
-
   const handlelogin = async (e) => {
     e.preventDefault();
     if (!values?.username.trim() || !values?.password.trim()) {

@@ -54,6 +54,12 @@ const Register = () => {
           errPass: "Mật khẩu phải lớn hơn 8 kí tự",
         }));
       if (isEmail && !isPass) {
+        setError((prev) => ({
+          ...prev,
+          errName: null,
+          errEmail: null,
+          errPass: null,
+        }));
         const data = await register(values);
         if (data) {
           toast.success(`${data}`);
