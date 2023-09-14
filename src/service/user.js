@@ -1,5 +1,4 @@
 import axios from "axios";
-import { toast } from "react-toastify";
 
 const URL = `http://localhost:4000/api`;
 
@@ -19,7 +18,7 @@ export const updateProfile = async (values, token) => {
 
 export const changePassword = async (values, token) => {
   try {
-    const res = await axios.put(`${URL}/user/updatePassword`, values, {
+    const res = await axios.put(`${URL}/user/updatepassword`, values, {
       headers: {
         Authorization: token,
       },

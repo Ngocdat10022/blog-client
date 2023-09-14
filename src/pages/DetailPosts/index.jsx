@@ -34,12 +34,13 @@ const DetailPost = () => {
           <LoadingSkeleton width="100%" height="400px" />
           <div className="flex items-center gap-3">
             <LoadingSkeleton width="50px" height="50px" radius="100%" />
-            <div className="flex flex-col items-start ">
+            <div className="flex flex-col items-start gap-2 ">
+              <LoadingSkeleton width="80px" height="10px" />
               <LoadingSkeleton width="80px" height="10px" />
               {currentUser?.username === detailPosts?.username && (
                 <div className="flex items-center justify-center gap-2">
-                  <LoadingSkeleton width="30px" height="30px" />
-                  <LoadingSkeleton width="30px" height="30px" />
+                  <LoadingSkeleton width="15px" height="15px" />
+                  <LoadingSkeleton width="15px" height="15px" />
                 </div>
               )}
             </div>

@@ -74,7 +74,7 @@ export const addPosts = async (values, token) => {
 
 export const updatePosts = async (values, token, id) => {
   try {
-    const res = await axios.put(`${URL}/posts/updatePosts/${id}`, values, {
+    const res = await axios.put(`${URL}/posts/updateposts/${id}`, values, {
       headers: {
         Authorization: token,
       },
@@ -92,7 +92,7 @@ export const updatePosts = async (values, token, id) => {
 
 export const deletePosts = async (token, id) => {
   try {
-    const res = await axios.delete(`${URL}/posts/deletePosts/${id}`, {
+    const res = await axios.delete(`${URL}/posts/deleteposts/${id}`, {
       headers: {
         Authorization: token,
       },
